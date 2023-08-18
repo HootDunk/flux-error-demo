@@ -25,6 +25,7 @@ class DemoControllerTest extends Specification {
         ex.getStatus() == HttpStatus.I_AM_A_TEAPOT
     }
 
+    // Fails currently
     def "test flux error"() {
         when:
         var res = httpClient.toBlocking().exchange(HttpRequest.GET("/flux"), List<Integer>)
