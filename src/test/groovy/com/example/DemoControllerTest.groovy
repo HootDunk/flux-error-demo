@@ -35,30 +35,4 @@ class DemoControllerTest extends Specification {
         ex.getStatus() == HttpStatus.I_AM_A_TEAPOT
     }
 
-
-
-
-
-    static class StatusTrap<T> {
-        HttpStatus status
-        Optional<T> data
-        Optional<Throwable> ex
-
-        StatusTrap(T data, HttpStatus status, Throwable ex) {
-            this.status = status
-            this.data = Optional.ofNullable(data)
-            this.ex = Optional.ofNullable(ex)
-        }
-    }
-
-    private <I, O> StatusTrap<O> statusTrap(HttpRequest<I> request, Class<O> bodyType) {
-        try {
-            def response = httpClient.toBlocking()
-                    .exchange(request, bodyType)
-            return new StatusTrap<O>(response.body(), response.status(), null)
-        } catch (HttpClientResponseException ex) {
-            return new StatusTrap<O>(null, ex.response.status(), ex)
-        }
-    }
-
 }
